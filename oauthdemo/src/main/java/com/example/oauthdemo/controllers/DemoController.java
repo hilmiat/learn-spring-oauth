@@ -11,12 +11,13 @@ import java.security.Principal;
 public class DemoController {
     @GetMapping("/demo1")
     public String demo(){
-        return "Hello from rest API";
+        return "hello";
     }
 
     @GetMapping("/me")
     public Principal getMe(Principal p){
         return p;
     }
+
 
 }

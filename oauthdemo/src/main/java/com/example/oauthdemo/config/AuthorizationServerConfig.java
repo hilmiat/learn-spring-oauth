@@ -1,6 +1,6 @@
 package com.example.oauthdemo.config;
 
-import com.example.oauthdemo.services.UserService;
+import com.example.oauthdemo.sevices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -15,53 +15,55 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import javax.sql.DataSource;
+import javax.*
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig
-    extends AuthorizationServerConfigurerAdapter {
+    extends AuthorizationServerConfigurerAdapter{
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
 
     @Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
 
     @Bean
-    public TokenStore tokenStore(){
+    public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
 
     @Autowired
     UserService userService;
 
+
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(new BCryptPasswordEncoder());
+//        security.tokenKeyAccess("permitAll()")
+//                .checkTokenAccess("isAuthenticated()")
+//                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 //        endpoints.authenticationManager(authenticationManager);
         endpoints.tokenStore(tokenStore())
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userService);
-    }
+                 .authenticationManager(authenticationManager)
+                 .userDetailsService(userService);
+                }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
-        //        clients.inMemory()
+//        clients.inMemory()
 //                .withClient("myapp")
 //                .secret(new BCryptPasswordEncoder().encode("password"))
 //                .authorizedGrantTypes("password","refresh_token")
 //                .scopes("read","write")
-//                .accessTokenValiditySeconds(5 * 60)
-//                .refreshTokenValiditySeconds(10 * 60);
+//                .accessTokenValiditySeconds(5*60)
+//                .refreshTokenValiditySeconds(10*60);
+
     }
 }
