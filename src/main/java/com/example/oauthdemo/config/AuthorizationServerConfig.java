@@ -1,6 +1,6 @@
 package com.example.oauthdemo.config;
 
-import com.example.oauthdemo.services.UserService;
+import com.example.oauthdemo.sevices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -20,11 +20,10 @@ import javax.sql.DataSource;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig
-    extends AuthorizationServerConfigurerAdapter {
+    extends AuthorizationServerConfigurerAdapter{
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
 
     @Autowired
     @Qualifier("dataSource")
@@ -61,7 +60,8 @@ public class AuthorizationServerConfig
 //                .secret(new BCryptPasswordEncoder().encode("password"))
 //                .authorizedGrantTypes("password","refresh_token")
 //                .scopes("read","write")
-//                .accessTokenValiditySeconds(5 * 60)
-//                .refreshTokenValiditySeconds(10 * 60);
+//                .accessTokenValiditySeconds(5*60)
+//                .refreshTokenValiditySeconds(10*60);
+
     }
 }
