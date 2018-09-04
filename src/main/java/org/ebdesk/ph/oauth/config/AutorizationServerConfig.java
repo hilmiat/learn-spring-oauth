@@ -1,6 +1,6 @@
-package com.example.oauthdemo.config;
+package org.ebdesk.ph.oauth.config;
 
-import com.example.oauthdemo.services.UserService;
+import org.ebdesk.ph.oauth.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -19,19 +19,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig
-    extends AuthorizationServerConfigurerAdapter {
-
+public class AutorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
-
 
     @Autowired
     @Qualifier("dataSource")
     private DataSource dataSource;
 
     @Bean
-    public TokenStore tokenStore(){
+    public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
 
@@ -40,9 +37,9 @@ public class AuthorizationServerConfig
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(new BCryptPasswordEncoder());
+//        security.tokenKeyAccess("permitAll()")
+//                .checkTokenAccess("isAuthenticated()")
+//                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
@@ -56,12 +53,12 @@ public class AuthorizationServerConfig
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
-        //        clients.inMemory()
+//        clients.inMemory()
 //                .withClient("myapp")
 //                .secret(new BCryptPasswordEncoder().encode("password"))
-//                .authorizedGrantTypes("password","refresh_token")
-//                .scopes("read","write")
+//                .authorizedGrantTypes("password", "refresh_token")
 //                .accessTokenValiditySeconds(5 * 60)
+//                .scopes("read", "write")
 //                .refreshTokenValiditySeconds(10 * 60);
     }
 }

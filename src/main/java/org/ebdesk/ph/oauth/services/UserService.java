@@ -1,7 +1,7 @@
-package com.example.oauthdemo.services;
+package org.ebdesk.ph.oauth.services;
 
-import com.example.oauthdemo.entities.User;
-import com.example.oauthdemo.repositories.UserRepository;
+import org.ebdesk.ph.oauth.entities.User;
+import org.ebdesk.ph.oauth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,42 +15,45 @@ import java.util.Arrays;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
-    @Autowired
+
+    final
     UserRepository userRepository;
 
-//    @Autowired
-//    BCryptPasswordEncoder encoder;
-//
-//    //test user
+    final
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
 //    @PostConstruct
-//    public void tambahUser(){
+//    public void tambahUser() {
 //        User user1 = new User();
-//        user1.setUsername("hilmiat");
-//        user1.setPassword(encoder.encode("pass1"));
+//        user1.setUsername("eko");
+//        user1.setPassword(bCryptPasswordEncoder.encode("pass1"));
 //        user1.setIsactive(true);
 //        userRepository.save(user1);
 //
 //        User user2 = new User();
-//        user2.setUsername("user2");
-//        user2.setPassword(encoder.encode("pass2"));
+//        user2.setUsername("maulana");
+//        user2.setPassword(bCryptPasswordEncoder.encode("pass1"));
 //        user2.setIsactive(true);
 //        userRepository.save(user2);
 //    }
-
-
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException("Invalid username or password");
+        if (user == null) {
+            throw new UsernameNotFoundException("invalid");
         }
-        return new org.springframework.security.core
-                .userdetails.User(
-                        user.getUsername(),
-                        user.getPassword(),
-                        Arrays.asList(new SimpleGrantedAuthority("ROLE ADMIN"))
-                );
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                Arrays.asList(new SimpleGrantedAuthority("Role Admin"))
+        );
     }
 }

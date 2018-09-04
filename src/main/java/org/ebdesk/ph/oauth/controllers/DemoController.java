@@ -1,4 +1,4 @@
-package com.example.oauthdemo.controllers;
+package org.ebdesk.ph.oauth.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,14 +9,13 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api")
 public class DemoController {
-    @GetMapping("/demo1")
-    public String demo(){
-        return "Hello from rest API";
+    @GetMapping("demo1")
+    public String demo() {
+        return "hello from rest API";
     }
 
-    @GetMapping("/me")
+    @GetMapping("me")
     public Principal getMe(Principal p){
         return p;
     }
-
 }

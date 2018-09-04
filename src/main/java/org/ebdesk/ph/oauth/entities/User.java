@@ -1,4 +1,4 @@
-package com.example.oauthdemo.entities;
+package org.ebdesk.ph.oauth.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String username,password;
+    private String username, password;
     private boolean isactive;
 
     public long getId() {
